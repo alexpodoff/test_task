@@ -13,6 +13,8 @@ std_dev = db.get_std_dev_value(d)
 percent_val = db.get_percentile(d)
 deals_by_sec = db.get_deal_by_sec()
 
+db.build_histograms(uniq_id, db.fut_sess_contents, 'z:/tmp/histograms/png')
+db.build_graphics(uniq_id, db.fut_sess_contents, 'z:/tmp/graphics/png')
 db.build_histograms(uniq_id, db.opt_sess_contents, 'z:/tmp/histograms/png')
 db.build_graphics(uniq_id, db.opt_sess_contents, 'z:/tmp/graphics/png')
 

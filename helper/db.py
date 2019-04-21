@@ -178,12 +178,12 @@ class DbWorker:
         cursor = self.connection.cursor()
         try:
             cursor.execute(
-                f"select o.isin_id,o.name,d.price from {table} o inner join deal d on o.isin_id=d.isin_id")
-            lst = [row for row in cursor]
-            for i in range(0, len(lst)):
-                for j in unic_id:
-                    if lst[i][0] == j:
-                        self.build_histogram_by_id(j, path)
+                f'select o.isin_id from {table} o inner join deal d on o.isin_id=d.isin_id')
+            lst = set([row for row in cursor])
+            new_lst = [i[0] for i in lst]
+            for i in range(0, len(new_lst)):
+                if new_lst[i] in unic_id:
+                    self.build_histogram_by_id(unic_id[i], path)
         finally:
             cursor.close()
 
@@ -198,12 +198,12 @@ class DbWorker:
         cursor = self.connection.cursor()
         try:
             cursor.execute(
-                f"select o.isin_id,o.name,d.price from {table} o inner join deal d on o.isin_id=d.isin_id")
-            lst = [row for row in cursor]
-            for i in range(0, len(lst)):
-                for j in unic_id:
-                    if lst[i][0] == j:
-                        self.build_graph_by_id(j, path)
+                f'select o.isin_id from {table} o inner join deal d on o.isin_id=d.isin_id')
+            lst = set([row for row in cursor])
+            new_lst = [i[0] for i in lst]
+            for i in range(0, len(new_lst)):
+                if new_lst[i] in unic_id:
+                    self.build_graph_by_id(unic_id[i], path)
         finally:
             cursor.close()
 
