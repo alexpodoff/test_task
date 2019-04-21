@@ -42,8 +42,8 @@ class DbWorker:
 
     def get_deal_count_in_second(self, date):
         """
-        Returns deal count list for specific second if needed
-        takes string this kind: '%H:%M:%S'
+        Returns list with isin_ids of deals for specific second if needed
+        takes string this kind: '%Y-%M-%D %H:%M:%S'
         :param date: str
         :return: list
         """

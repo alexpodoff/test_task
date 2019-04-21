@@ -6,6 +6,7 @@ from helper.db import DbWorker
 
 db = DbWorker("z:/tmp/test_data.db")
 unic_id = db.get_uniq_id()
+test_path = 'z:/tmp'
 
 
 def test_get_expected_value():
@@ -27,19 +28,29 @@ def test_get_data_for_graphs():
 
 def test_build_graph_by_id():
     _id = random.choice(unic_id)
-    db.build_graph_by_id(_id, 'z:/tmp')
-    assert os.path.exists(f'z:/tmp/graphic_{_id}.png')
+    db.build_graph_by_id(_id, test_path)
+    assert os.path.exists(f'{test_path}/graphic_{_id}.png')
+    os.remove(f'{test_path}/graphic_{_id}.png')
 
 
 def test_build_histogram_by_id():
     _id = random.choice(unic_id)
-    db.build_histogram_by_id(_id, 'z:/tmp')
-    assert os.path.exists(f'z:/tmp/histogram_{_id}.png')
+    db.build_histogram_by_id(_id, test_path)
+    assert os.path.exists(f'{test_path}/histogram_{_id}.png')
+    os.remove(f'{test_path}/histogram_{_id}.png')
 
 
 def test_get_value():
     _id = unic_id[65]
     assert db.get_value([_id], 'opt_sess_contents') == {'Июньский Марж.Амер.Put.57500 Фьюч.контр Si-6.18': [20, 20, 20]}
+
+
+def test_get_deal_count_in_seconds():
+    assert len(db.get_deal_count_in_second("2018-05-04 15:00:00")) == 11
+
+
+def test_get_uniq_id():
+    assert len(db.get_uniq_id()) == 79
 
 
 if __name__ == "__main__":
@@ -51,3 +62,5 @@ if __name__ == "__main__":
     test_build_graph_by_id()
     test_build_histogram_by_id()
     test_get_value()
+    test_get_deal_count_in_seconds()
+    test_get_uniq_id()
