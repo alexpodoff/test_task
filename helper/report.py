@@ -1,8 +1,6 @@
 import os
-
 import xlwt
 from PIL import Image
-
 from helper.db import DbWorker
 
 
@@ -65,6 +63,12 @@ class ReportWorker:
 
     @staticmethod
     def convert_and_save_image(image, path):
+        """
+        Converted PNG image file into BMP and puts it in path dir
+        :param image: str
+        :param path: str
+        :return: None
+        """
         img = Image.open(image)
         r, g, b, a = img.split()
         img = Image.merge("RGB", (r, g, b))
@@ -73,6 +77,12 @@ class ReportWorker:
         img.close()
 
     def convert_all_in_bmp(self, path, new_path):
+        """
+        Converted all PNG images from path into BMP and puts it in new_path
+        :param path: str
+        :param new_path: srt
+        :return: None
+        """
         DbWorker.mkdir(new_path)
         for i in os.listdir(path):
             self.convert_and_save_image(path+'/'+i, new_path)
